@@ -1,0 +1,19 @@
+{
+  "name": "drain_device",
+  "description": "Mark the device unschedulable; let current work finish.",
+  "labels": {
+    "side_effects": "drains",
+    "idempotent": true
+  },
+  "estop": false,
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "reason": {
+        "type": "string"
+      }
+    },
+    "required": [],
+    "additionalProperties": false
+  }
+}

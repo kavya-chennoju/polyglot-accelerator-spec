@@ -1,0 +1,22 @@
+{
+  "name": "isolate",
+  "description": "Hard-fence a faulting device: drop from scheduler and fabric.",
+  "labels": {
+    "side_effects": "destructive",
+    "requires_confirmation": true
+  },
+  "estop": true,
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "reason": {
+        "type": "string"
+      },
+      "confirmation_token": {
+        "type": "string"
+      }
+    },
+    "required": [],
+    "additionalProperties": false
+  }
+}

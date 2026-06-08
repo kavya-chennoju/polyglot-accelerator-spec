@@ -1,0 +1,24 @@
+{
+  "name": "reset_link",
+  "description": "Reset a link. Refuses unless the device is drained.",
+  "labels": {
+    "side_effects": "destructive",
+    "requires_confirmation": true
+  },
+  "estop": true,
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "port": {
+        "type": "integer"
+      },
+      "confirmation_token": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "port"
+    ],
+    "additionalProperties": false
+  }
+}

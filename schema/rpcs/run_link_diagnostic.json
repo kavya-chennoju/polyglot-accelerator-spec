@@ -1,0 +1,20 @@
+{
+  "name": "run_link_diagnostic",
+  "description": "Run a vendor link diagnostic on a port.",
+  "labels": {
+    "side_effects": "none"
+  },
+  "estop": false,
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "port": {
+        "type": "integer"
+      }
+    },
+    "required": [
+      "port"
+    ],
+    "additionalProperties": false
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "accelerator.ecc_uncorrectable",
+  "title": "accelerator.ecc_uncorrectable",
+  "description": "Uncorrectable ECC / DBE event.",
+  "type": "object",
+  "properties": {
+    "severity": {
+      "type": "string",
+      "enum": [
+        "critical"
+      ]
+    },
+    "confidence": {
+      "type": "number"
+    },
+    "device": {
+      "type": "object",
+      "properties": {
+        "vendor": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string"
+        },
+        "device_id": {
+          "type": "string"
+        },
+        "host_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "vendor",
+        "model",
+        "device_id",
+        "host_id"
+      ],
+      "additionalProperties": false
+    },
+    "vendor_evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "source",
+          "code"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "recommended_actions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "disallowed_actions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "labels": {
+      "type": "object",
+      "properties": {
+        "fault_class": {
+          "type": "string",
+          "enum": [
+            "interconnect",
+            "memory",
+            "compute",
+            "thermal",
+            "firmware",
+            "lifecycle"
+          ]
+        },
+        "fault_domain": {
+          "type": "string",
+          "enum": [
+            "device",
+            "link",
+            "host",
+            "rack",
+            "fabric"
+          ]
+        }
+      },
+      "required": [
+        "fault_class",
+        "fault_domain"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "severity",
+    "confidence",
+    "device",
+    "vendor_evidence",
+    "recommended_actions",
+    "disallowed_actions",
+    "labels"
+  ],
+  "additionalProperties": true
+}

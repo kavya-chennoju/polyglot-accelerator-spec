@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "accelerator.heartbeat",
+  "title": "accelerator.heartbeat",
+  "description": "Periodic liveness + telemetry snapshot.",
+  "type": "object",
+  "properties": {
+    "device": {
+      "type": "object",
+      "properties": {
+        "vendor": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string"
+        },
+        "device_id": {
+          "type": "string"
+        },
+        "host_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "vendor",
+        "model",
+        "device_id",
+        "host_id"
+      ],
+      "additionalProperties": false
+    },
+    "labels": {
+      "type": "object",
+      "properties": {
+        "fault_class": {
+          "type": "string",
+          "enum": [
+            "interconnect",
+            "memory",
+            "compute",
+            "thermal",
+            "firmware",
+            "lifecycle"
+          ]
+        },
+        "fault_domain": {
+          "type": "string",
+          "enum": [
+            "device",
+            "link",
+            "host",
+            "rack",
+            "fabric"
+          ]
+        }
+      },
+      "required": [
+        "fault_class",
+        "fault_domain"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "device",
+    "labels"
+  ],
+  "additionalProperties": true
+}

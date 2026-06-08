@@ -1,0 +1,149 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "accelerator.power_throttle",
+  "title": "accelerator.power_throttle",
+  "description": "Sustained power-cap throttle.",
+  "type": "object",
+  "properties": {
+    "severity": {
+      "type": "string",
+      "enum": [
+        "info",
+        "degraded",
+        "critical"
+      ]
+    },
+    "confidence": {
+      "type": "number"
+    },
+    "device": {
+      "type": "object",
+      "properties": {
+        "vendor": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string"
+        },
+        "device_id": {
+          "type": "string"
+        },
+        "host_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "vendor",
+        "model",
+        "device_id",
+        "host_id"
+      ],
+      "additionalProperties": false
+    },
+    "normalized_effect": {
+      "type": "object",
+      "properties": {
+        "communication_path": {
+          "type": "string",
+          "enum": [
+            "ok",
+            "degraded",
+            "failed"
+          ]
+        },
+        "compute_path": {
+          "type": "string",
+          "enum": [
+            "ok",
+            "degraded",
+            "failed"
+          ]
+        },
+        "memory_integrity": {
+          "type": "string",
+          "enum": [
+            "ok",
+            "degraded",
+            "failed"
+          ]
+        },
+        "bandwidth_impact": {
+          "type": "string",
+          "enum": [
+            "none",
+            "possible",
+            "probable",
+            "confirmed"
+          ]
+        },
+        "job_correctness_risk": {
+          "type": "string",
+          "enum": [
+            "none",
+            "unknown",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        "job_performance_risk": {
+          "type": "string",
+          "enum": [
+            "none",
+            "low",
+            "medium",
+            "high"
+          ]
+        }
+      },
+      "required": [
+        "communication_path",
+        "compute_path",
+        "memory_integrity",
+        "bandwidth_impact",
+        "job_correctness_risk",
+        "job_performance_risk"
+      ],
+      "additionalProperties": false
+    },
+    "labels": {
+      "type": "object",
+      "properties": {
+        "fault_class": {
+          "type": "string",
+          "enum": [
+            "interconnect",
+            "memory",
+            "compute",
+            "thermal",
+            "firmware",
+            "lifecycle"
+          ]
+        },
+        "fault_domain": {
+          "type": "string",
+          "enum": [
+            "device",
+            "link",
+            "host",
+            "rack",
+            "fabric"
+          ]
+        }
+      },
+      "required": [
+        "fault_class",
+        "fault_domain"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "severity",
+    "confidence",
+    "device",
+    "normalized_effect",
+    "labels"
+  ],
+  "additionalProperties": true
+}

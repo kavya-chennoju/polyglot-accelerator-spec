@@ -1,0 +1,14 @@
+{
+  "name": "get_health",
+  "description": "Current telemetry snapshot: util, mem, temp, power, throttle reasons.",
+  "labels": {
+    "side_effects": "none"
+  },
+  "estop": false,
+  "parameters": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  }
+}
