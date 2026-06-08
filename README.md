@@ -32,7 +32,7 @@ The docs site is built and deployed automatically by [`.github/workflows/deploy.
 
 ## Companion artifacts
 
-- `polyglot-accelerator-schema` — JSON Schema files, language bindings, conformance suite.
+- `polyglot-accelerator` — the contract as one pip-installable package: base class, typed payloads, label enums, conformance suite. The single dependency every driver shares.
 - `mhp-core` — underlying transport, discovery, security, and estop protocol.
 
 ## Contributing

@@ -15,7 +15,7 @@ The manifest is **identity-only**. Topology (which port, which peer, which fabri
 | `host_id` | string | Operator-assigned host identity. MUST match the host's `mhp-fleet-service` registration. |
 | `fw_version` | string | Driver / firmware version reported by the vendor SDK. |
 | `conformance_level` | enum | One of `core` / `extended` / `experimental`. |
-| `schema_versions` | array of strings | All Polyglot schema versions this driver can emit. MUST contain at least one stable version. |
+| `schema_versions` | array of strings | All `polyglot-accelerator` contract versions this driver can emit (e.g. `["2026-06-01"]`). MUST contain at least one stable version. |
 
 ## Optional fields
 

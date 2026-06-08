@@ -26,7 +26,7 @@ A `core` driver MUST expose the following RPCs with the exact names, semantics, 
 
 ## RPC contract requirements
 
-- Every RPC MUST validate inputs and outputs against the schema at `https://schemas.polyglot.org/accelerator/<schema_version>/rpcs/<rpc_name>.json`.
+- Every RPC's inputs and outputs are the typed signatures exported by the `polyglot-accelerator` package. Using the typed signature is how you conform — there is no separate schema to validate against.
 - Every RPC MUST be idempotent unless explicitly marked otherwise. Repeating `drain_device` MUST be a no-op if the device is already draining.
 - Every RPC marked `requires_confirmation` MUST accept and validate a fleet-service-issued confirmation token. Calling without a valid token MUST return a structured error `accelerator.error.requires_confirmation`.
 - Every RPC marked `estop=True` MUST be exposed via the MHP estop mechanism. Drivers MUST NOT add new `estop`-tier RPCs without an RFC.

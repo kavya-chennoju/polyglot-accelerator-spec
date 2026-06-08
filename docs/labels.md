@@ -48,7 +48,7 @@ fleet.subscribe("emit.labels.stability=stable", on_event)
 
 ## Label enums are governed
 
-The enum values above are the **only** permitted values. A driver MUST NOT invent new label values (e.g. `side_effects: "mostly_harmless"`). New enum values require an RFC against the schema repository.
+The enum values above are the **only** permitted values — they are Python enums in the `polyglot-accelerator` package, so an invalid value won't even construct. A driver MUST NOT invent new label values (e.g. `side_effects: "mostly_harmless"`). New enum values require an RFC against the package.
 
 ## Vendor-namespaced labels
 

@@ -4,9 +4,11 @@ The following Python skeleton satisfies the [Identity Manifest](manifest.md), [R
 
 Vendors subclass `AcceleratorDriverBase`, set `VENDOR`, and implement the private `_*` methods against their SDK. The base class enforces the contract; the subclass supplies the vendor-specific behavior.
 
+The base class below is **what the `polyglot-accelerator` package provides** — vendors import it, they don't write it. It's shown here so you can see exactly what the contract enforces. It builds on MHP's `DeviceDriver` and uses the package's typed payloads:
+
 ```python
 from device_connect import DeviceDriver, rpc, emit, periodic
-from polyglot_schema.accelerator import (
+from polyglot_accelerator import (
     InterconnectFault, EccUncorrectable, ThermalThrottle,
     PowerThrottle, FatalFault, Heartbeat,
 )
@@ -121,7 +123,7 @@ The whole point: vendors write a thin specialization that wires the base class t
 
 ```python
 import pynvml
-from polyglot_accelerator_driver_base import AcceleratorDriverBase
+from polyglot_accelerator import AcceleratorDriverBase
 
 
 class NvidiaAcceleratorDriver(AcceleratorDriverBase):

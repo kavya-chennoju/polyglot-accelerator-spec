@@ -34,7 +34,7 @@ The `estop=True` annotation is an MHP-level promise:
 
 - The RPC MUST be safe to invoke unilaterally without coordination with other agents.
 - The RPC MUST be idempotent.
-- The fleet service MAY invoke estop RPCs without consumer authorization in response to certain canonical events (defined in the schema repository per event type).
+- The fleet service MAY invoke estop RPCs without consumer authorization in response to certain canonical events (defined per event type in the `polyglot-accelerator` package).
 
 ## Side-effect honesty
 

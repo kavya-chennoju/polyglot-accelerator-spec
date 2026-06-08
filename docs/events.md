@@ -1,6 +1,6 @@
 # Required Event Vocabulary
 
-A `core` driver MUST emit the following canonical event types, with full schema conformance, whenever the underlying condition is detected.
+A `core` driver MUST emit the following canonical event types whenever the underlying condition is detected. Each event is a **typed payload** from the `polyglot-accelerator` package — the driver constructs the class, which guarantees the structure.
 
 ## The required set
 
@@ -22,25 +22,30 @@ A `core` driver MUST emit the following canonical event types, with full schema 
 | `accelerator.firmware_update_required` | Firmware mismatch vs. fleet-declared minimum. |
 | `accelerator.degraded_link_remediated` | After a `run_link_diagnostic` clears an `interconnect_fault`. Closes the loop for consumers. |
 
-## Event payload conformance
+## How conformance works
 
-Every emitted event MUST validate against the JSON Schema at:
+The driver constructs a typed payload from the package:
 
+```python
+from polyglot_accelerator import InterconnectFault
+
+await self.emit(InterconnectFault(
+    severity="degraded", confidence=0.92, ...
+))
 ```
-https://schemas.polyglot.org/accelerator/<schema_version>/<event_type>.json
-```
 
-REQUIRED top-level fields on every event:
+Because `InterconnectFault` is a typed class, populating it correctly **is** conforming. There is no separate JSON Schema to validate against — the type is the schema. The package version the driver emits against is reported as `schema_version`.
+
+## Required fields on every event
 
 | Field | Type | Notes |
 |---|---|---|
 | `event_type` | string | Canonical event type. |
-| `schema_version` | string | MUST be present in the driver's `schema_versions` manifest. |
-| `schema_uri` | string | Resolvable URI to the JSON Schema file. |
+| `schema_version` | string | The `polyglot-accelerator` package version this payload conforms to. |
 | `severity` | enum | `info` / `degraded` / `critical`. |
 | `confidence` | float in `[0.0, 1.0]` | Driver's confidence in its classification. |
 | `device` | object | Echoes manifest identity fields. |
-| `topology` | object | MUST include all topology fields relevant to the event (`link_type` for interconnect events, etc.). |
+| `topology` | object | The fabric context for *this* event (`link_type`, `local_port`, `peer_device_id`, `fabric_domain`). Populated per-event from the driver's internal fabric knowledge. |
 | `vendor_evidence` | array of objects | Raw vendor signals. See [Extension Points](extensions.md). |
 | `normalized_effect` | object | Canonical impact. See below. |
 | `recommended_actions` | array of strings | RPC names the driver considers safe. MUST be a subset of the driver's exposed RPCs. |
@@ -69,11 +74,12 @@ Drivers MUST populate every field. `unknown` is permitted on `job_correctness_ri
 
 ## Full example
 
+The wire form of a constructed `InterconnectFault`:
+
 ```json
 {
   "event_type":      "accelerator.interconnect_fault",
   "schema_version":  "2026-06-01",
-  "schema_uri":      "https://schemas.polyglot.org/accelerator/2026-06-01/interconnect_fault.json",
   "severity":        "degraded",
   "confidence":      0.92,
   "lifecycle":       "degraded",
