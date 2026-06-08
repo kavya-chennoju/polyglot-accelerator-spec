@@ -75,21 +75,9 @@ extra:
 
 nav:
   - Home: index.md
-  - Overview: overview.md
-  - Conformance Levels: conformance.md
-  - Identity Manifest: manifest.md
-  - Required Events: events.md
-  - Required RPCs: rpcs.md
-  - Labels: labels.md
-  - Schema Versioning: versioning.md
-  - Safety Model: safety.md
-  - Telemetry vs Events: telemetry-vs-events.md
-  - Extension Points: extensions.md
-  - Error Handling: errors.md
-  - Reference Skeleton: skeleton.md
-  - Conformance Suite: conformance-suite.md
-  - Governance: governance.md
-  - Getting Started: getting-started.md
+  - Events: events.md
+  - RPCs: rpcs.md
+  - Reference Driver: driver.md
 
 copyright: >
   Polyglot Accelerator Driver Specification ·

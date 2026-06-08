@@ -2,19 +2,18 @@
 
 **Live docs:** https://kavya-chennoju.github.io/polyglot-accelerator-spec/
 
-A vendor-neutral observability and control contract for heterogeneous accelerator fleets — NVIDIA, AMD, Intel/Habana, AWS Neuron, Google TPU, Meta MTIA, custom silicon. One canonical event vocabulary, one set of RPC names, one safety model — across every vendor's silicon.
+A vendor-neutral way for agents and humans to observe and control any accelerator — NVIDIA, AMD, Trainium, TPU, custom silicon — over the [device-connect](https://github.com/arm/device-connect) mesh. One canonical set of `@emit` / `@rpc` signatures across every vendor's silicon.
 
 This repository contains the specification (Markdown) and the MkDocs Material site that publishes it.
 
 ## What this is
 
-A draft RFC-style specification that every accelerator driver MUST conform to in order to participate in a Polyglot fleet. Includes:
+A driver is a device-connect driver that declares a **standard set of `@emit` and `@rpc` signatures**. The SDK builds the payloads, generates the parameter schemas, and broadcasts the manifest. Four pages:
 
-- Identity manifest fields every driver must declare.
-- Canonical event vocabulary (`accelerator.interconnect_fault`, `accelerator.ecc_uncorrectable`, etc.).
-- Vendor-neutral RPC names and semantics (`run_link_diagnostic`, `drain_device`, `isolate`).
-- Required label vocabulary for routing, RBAC, and discovery.
-- Schema versioning, governance, and conformance testing rules.
+- **Home** — the idea; what's standardized vs. vendor-owned.
+- **Events** — the canonical `@emit` signatures.
+- **RPCs** — the canonical `@rpc` signatures, with safety labels.
+- **Reference Driver** — base class + a vendor subclass, end to end.
 
 ## Local preview
 
@@ -37,7 +36,7 @@ The docs site is built and deployed automatically by [`.github/workflows/deploy.
 
 ## Contributing
 
-Specification changes follow the RFC process documented at [Governance](https://kavya-chennoju.github.io/polyglot-accelerator-spec/governance/). RFCs are open PRs against this repository.
+Specification changes are open PRs against this repository.
 
 ## License
 
