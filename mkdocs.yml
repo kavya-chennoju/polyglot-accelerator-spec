@@ -1,0 +1,98 @@
+site_name: Polyglot Accelerator Driver Spec
+site_description: Vendor-neutral observability and control contract for heterogeneous accelerator fleets.
+site_url: https://kavya-chennoju.github.io/polyglot-accelerator-spec/
+repo_url: https://github.com/kavya-chennoju/polyglot-accelerator-spec
+repo_name: polyglot-accelerator-spec
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  language: en
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - navigation.footer
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+    - content.action.edit
+  icon:
+    repo: fontawesome/brands/github
+    edit: material/pencil
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+      toc_depth: 3
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+      use_pygments: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+plugins:
+  - search
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/kavya-chennoju/polyglot-accelerator-spec
+  generator: false
+
+nav:
+  - Home: index.md
+  - Overview: overview.md
+  - Conformance Levels: conformance.md
+  - Identity Manifest: manifest.md
+  - Required Events: events.md
+  - Required RPCs: rpcs.md
+  - Labels: labels.md
+  - Schema Versioning: versioning.md
+  - Safety Model: safety.md
+  - Telemetry vs Events: telemetry-vs-events.md
+  - Extension Points: extensions.md
+  - Error Handling: errors.md
+  - Reference Skeleton: skeleton.md
+  - Conformance Suite: conformance-suite.md
+  - Governance: governance.md
+  - Getting Started: getting-started.md
+
+copyright: >
+  Polyglot Accelerator Driver Specification ·
+  <a href="https://github.com/kavya-chennoju/polyglot-accelerator-spec/blob/main/LICENSE">License</a>
