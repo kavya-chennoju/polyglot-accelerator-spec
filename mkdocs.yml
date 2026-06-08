@@ -53,10 +53,8 @@ markdown_extensions:
       toc_depth: 3
   - pymdownx.details
   - pymdownx.highlight:
-      anchor_linenums: true
       use_pygments: true
   - pymdownx.inlinehilite
-  - pymdownx.snippets
   - pymdownx.superfences
   - pymdownx.tabbed:
       alternate_style: true
