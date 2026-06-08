@@ -1,6 +1,8 @@
 # Identity Manifest
 
-Every driver MUST register an identity manifest at startup. The manifest is queryable via `fleet.discover()` and is the source of truth for all labels the fleet service applies to events from that device.
+Every driver MUST register an identity manifest at startup. The manifest is queryable via `fleet.discover()` and is the source of truth for the device labels the fleet service applies to events from that device.
+
+The manifest is **identity-only**. Topology (which port, which peer, which fabric_domain a fault touches) is *per-event* — drivers populate the event-level [`topology`](events.md) block when emitting. Drivers internally know their fabric position; they don't republish a static topology block in the manifest.
 
 ## Required fields
 
@@ -15,27 +17,13 @@ Every driver MUST register an identity manifest at startup. The manifest is quer
 | `conformance_level` | enum | One of `core` / `extended` / `experimental`. |
 | `schema_versions` | array of strings | All Polyglot schema versions this driver can emit. MUST contain at least one stable version. |
 
-## Required topology block
-
-```json
-"topology": {
-  "intra_node_fabric": "nvlink_v4" | "xgmi" | "neuronlink" | "ici" | "none",
-  "intra_node_peers":  ["gpu-041", "gpu-043", ...],
-  "fabric_domain":     "rack12-nvsw02",
-  "inter_node_fabric": "infiniband_ndr" | "roce_v2" | "efa" | "ocs" | "none",
-  "pci_address":       "0000:1a:00.0"
-}
-```
-
-The topology block is REQUIRED. Drivers that genuinely cannot determine some fields (e.g. a development board with no fabric) MUST emit `null` rather than omit the field. The fleet service uses topology to compute blast-radius queries:
-
-```python
-fleet.discover("fabric_domain=rack12-nvsw02 severity=critical")
-```
-
 ## Optional fields
 
-`tenant`, `labels.<vendor>.*`, `hw_revision`, `serial`, `power_cap_w`, `mem_total_gb`. Drivers MAY add these but consumer code MUST NOT depend on their presence.
+| Field | When to set |
+|---|---|
+| `tenant` | If the device is scoped to a specific tenant (multi-tenant fleets). |
+| `labels.<vendor>.*` | Vendor-specific diagnostic labels. Non-portable; consumer code MUST NOT depend on them. |
+| `hw_revision`, `serial`, `power_cap_w`, `mem_total_gb` | When known and useful for fleet-wide queries. |
 
 ## Example
 
@@ -49,13 +37,12 @@ fleet.discover("fabric_domain=rack12-nvsw02 severity=critical")
   "fw_version":        "535.183.06",
   "conformance_level": "core",
   "schema_versions":   ["2026-06-01"],
-  "topology": {
-    "intra_node_fabric": "nvlink_v4",
-    "intra_node_peers":  ["gpu-040", "gpu-041", "gpu-043"],
-    "fabric_domain":     "rack12-nvsw02",
-    "inter_node_fabric": "infiniband_ndr",
-    "pci_address":       "0000:1a:00.0"
-  },
-  "tenant": "training-prod"
+  "tenant":            "training-prod"
 }
 ```
+
+## Why no static topology block here?
+
+Topology context belongs to *events*, not to the device's identity. A fault doesn't just hit `gpu-042` — it hits `gpu-042` on a specific NVLink port to a specific peer in a specific fabric domain. Those details are situational and only meaningful in the context of the event that surfaced them. Putting them per-event keeps the contract minimal at registration time, lets the driver decide which subset of topology context to attach per event, and avoids stale state when topology shifts (e.g. dynamic NVSwitch repartitioning).
+
+The driver's internal knowledge of fabric position is what feeds the event-level [`topology`](events.md#full-example) block when a fault is emitted. That's the contract surface; the manifest stays identity-only.

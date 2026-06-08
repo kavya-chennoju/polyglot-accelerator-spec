@@ -18,6 +18,8 @@ class AcceleratorDriverBase(DeviceDriver):
     CONFORMANCE     = "core"
 
     # ── Identity (REQUIRED) ─────────────────────────────────────────
+    # Identity-only. The driver discovers its fabric position internally and
+    # uses that knowledge to populate per-event `topology` blocks when emitting.
     async def on_start(self):
         self.identity = {
             "device_type":       "accelerator",
@@ -28,8 +30,9 @@ class AcceleratorDriverBase(DeviceDriver):
             "fw_version":        self._read_fw_version(),
             "conformance_level": self.CONFORMANCE,
             "schema_versions":   self.SCHEMA_VERSIONS,
-            "topology":          self._discover_topology(),
         }
+        # Internal-only: used to fill event-level `topology` per emission.
+        self._fabric = self._discover_fabric_position()
 
     # ── Required events ─────────────────────────────────────────────
     @periodic(seconds=30)
@@ -135,7 +138,8 @@ class NvidiaAcceleratorDriver(AcceleratorDriverBase):
     def _read_fw_version(self):
         return pynvml.nvmlSystemGetDriverVersion().decode()
 
-    def _discover_topology(self):
+    def _discover_fabric_position(self):
+        # Internal driver state — fed into per-event topology blocks at emit time.
         return self._enumerate_nvlink_peers()
 
     async def _vendor_drain(self, reason):
